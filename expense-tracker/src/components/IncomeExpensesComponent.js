@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState';
+import { Row, Col, Typography, Card } from 'antd';
 
 export function IncomeExpensesComponent() {
+  const { Title } = Typography;
   const { transactions } = useContext(GlobalContext);
   const expense = (transactions
     .map((t) => t.amount)
@@ -13,17 +15,17 @@ export function IncomeExpensesComponent() {
     .filter((amount) => amount > 0)
     .reduce((acc, amount) => (acc+=amount), 0).toFixed(2);
   return (
-    <>
-      <div className="inc-exp-container">
-        <div>
-          <h4>Income</h4>
-          <p className="money plus">{income}</p>
-        </div>
-        <div>
-          <h4>Expense</h4>
-          <p className="money minus">{expense}</p>
-        </div>
-      </div>
-    </>
+    <Row gutter={16}>
+      <Col span={12}>
+        <Card title={<Title level={4}>Income</Title>}>
+          <div className="plus">{income}</div>
+        </Card>
+      </Col>
+      <Col span={12}>
+        <Card title={<Title level={4}>Expense</Title>}>
+          <div className="minus">{expense}</div>
+        </Card>
+      </Col>
+    </Row>
   )
 }

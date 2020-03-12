@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState';
+import { Typography } from 'antd';
 
 export function BalanceComponent() {
+  const { Title } = Typography;
   const { transactions } = useContext(GlobalContext);
   const balance = transactions
     .map((t) => t.amount)
@@ -9,8 +11,8 @@ export function BalanceComponent() {
     .toFixed(2);
   return (
     <>
-      <h4>Your Balance</h4>
-      <h1>${balance}</h1>
+        <Title level={4}>Your Balance</Title>
+        <Title level={1}>${balance}</Title>
     </>
   )
 }

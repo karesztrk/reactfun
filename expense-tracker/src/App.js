@@ -1,20 +1,25 @@
 import React from 'react';
 import './App.css';
-import { Header, Balance, IncomeExpenses, TransactionList, AddTransaction } from './components/';
+import { Balance, Head, IncomeExpenses, TransactionList, AddTransaction } from './components/';
+import { Layout } from 'antd';
 
 import { GlobalProvider } from './context/GlobalState';
 
 function App() {
+  const { Header , Content } = Layout;
   return (
     <GlobalProvider>
-      <Header />
-      <div className="container">
-        <Balance />
-        <IncomeExpenses />
-        <TransactionList />
-        <AddTransaction />
-      </div>
-
+      <Layout className="layout" hasSider={false}>
+        <Header>
+          <Head />
+        </Header>
+        <Content className="content">
+          <Balance />
+          <IncomeExpenses />
+          <TransactionList />
+          <AddTransaction />
+        </Content>
+      </Layout>
     </GlobalProvider>
   );
 }
