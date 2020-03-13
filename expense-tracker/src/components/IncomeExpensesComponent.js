@@ -15,7 +15,7 @@ export function IncomeExpensesComponent() {
     .filter((amount) => amount > 0)
     .reduce((acc, amount) => (acc+=amount), 0).toFixed(2);
   return (
-    <Row gutter={16}>
+    <Row gutter={16} className="balance-row">
       <Col span={12}>
         <Card title={<Title level={4}>Income</Title>}>
           <div className="plus">{income}</div>

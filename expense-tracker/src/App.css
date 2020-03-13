@@ -39,3 +39,7 @@ body, #root, .layout {
 .transaction.minus {
     border-right: 2px solid #c0392b;
 }
+
+.balance-row {
+    min-width: 300px;
+}
