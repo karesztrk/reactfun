@@ -3,8 +3,11 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import App from './App';
 import {GlobalContext} from './context/GlobalState';
 import {matchMediaMock} from './setupTests';
-import '@testing-library/jest-dom/extend-expect'
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
+// Mandatory to work with async DOM update
+import MutationObserver from 'mutation-observer';
+global.MutationObserver = MutationObserver;
 
 beforeAll(matchMediaMock);
 afterEach(cleanup);
@@ -18,7 +21,7 @@ test('renders app', () => {
 test('can submit new transaction', async () => {
   const text = 'Transaction text';
   const amount = 100;
-  const { getByText, getAllByText, getByPlaceholderText } = render(<GlobalContext.Provider value={{
+  const { container, getAllByText, getByPlaceholderText, findByText } = render(<GlobalContext.Provider value={{
     transactions: [],
   }}>
     <App />
@@ -29,9 +32,9 @@ test('can submit new transaction', async () => {
 
   fireEvent.change(textInput, { target: { value: text } });
   fireEvent.change(amountInput, { target: { value: amount } });
-  fireEvent.click(getByText(/Add transaction/i));
+  fireEvent.submit(container.querySelector('form'));
 
-  const newTransactionText = await getByText(/Transaction text/i);
+  const newTransactionText = await findByText(/Transaction text/i);
 
   const newTransactionAmount = getAllByText(/100/);
 
