@@ -3,6 +3,7 @@ import { render, cleanup } from '@testing-library/react';
 import {BalanceComponent} from './BalanceComponent';
 import '@testing-library/jest-dom/extend-expect'
 import {GlobalContext} from '../context/GlobalState';
+import {matchMediaMock} from '../setupTests';
 
 const text = 'Hi';
 
@@ -20,6 +21,7 @@ const transactions = [{
   text,
 }];
 
+beforeAll(matchMediaMock);
 afterEach(cleanup);
 
 test('renders income expense', () => {

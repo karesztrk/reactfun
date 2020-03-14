@@ -1,9 +1,12 @@
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import App from './App';
-import '@testing-library/jest-dom/extend-expect'
 import {GlobalContext} from './context/GlobalState';
+import {matchMediaMock} from './setupTests';
+import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 
+beforeAll(matchMediaMock);
 afterEach(cleanup);
 
 test('renders app', () => {
@@ -11,7 +14,6 @@ test('renders app', () => {
   const header = getByText("Expense Tracker");
   expect(header).toBeInTheDocument();
 });
-
 
 test('can submit new transaction', async () => {
   const text = 'Transaction text';
@@ -27,11 +29,11 @@ test('can submit new transaction', async () => {
 
   fireEvent.change(textInput, { target: { value: text } });
   fireEvent.change(amountInput, { target: { value: amount } });
-  fireEvent.click(getByText('Add transaction'));
+  fireEvent.click(getByText(/Add transaction/i));
 
   const newTransactionText = await getByText(/Transaction text/i);
 
-  const newTransactionAmount = await getAllByText(/100/);
+  const newTransactionAmount = getAllByText(/100/);
 
   expect(newTransactionText).toBeInTheDocument();
   // Balance & history && Income+Expense

@@ -2,7 +2,9 @@ import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import {AddTransactionComponent} from './AddTransactionComponent';
 import '@testing-library/jest-dom/extend-expect'
+import {matchMediaMock} from '../setupTests';
 
+beforeAll(matchMediaMock);
 afterEach(cleanup);
 
 test('renders income expense', () => {
@@ -30,5 +32,5 @@ test('can receive input', () => {
   fireEvent.change(amountInput, { target: { value: '100' } });
 
   expect(textInput.value).toBe('Hi');
-  expect(amountInput.value).toBe('100');
+  expect(amountInput.value).toContain('100');
 });

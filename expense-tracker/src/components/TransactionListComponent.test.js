@@ -3,6 +3,7 @@ import { render, cleanup } from '@testing-library/react';
 import {TransactionListComponent} from './TransactionListComponent';
 import '@testing-library/jest-dom/extend-expect'
 import {GlobalContext} from '../context/GlobalState';
+import {matchMediaMock} from '../setupTests';
 
 const text = 'Hi';
 
@@ -16,13 +17,15 @@ const transactions = [{
   text,
 }];
 
+beforeAll(matchMediaMock);
 afterEach(cleanup);
 
 test('renders clean list', () => {
   const { container, getByText } = render(<TransactionListComponent />);
-  const title = getByText('History');
+  const emptyContainer = container.querySelector('.ant-list-empty-text');
+  const title = getByText('No Data');
+  expect(emptyContainer).toBeInTheDocument();
   expect(title).toBeInTheDocument();
-  expect(container.firstChild.nextSibling).toBeEmpty();
 });
 
 test('renders two transactions', () => {
@@ -33,6 +36,6 @@ test('renders two transactions', () => {
       <TransactionListComponent />
     </GlobalContext.Provider>,
   );
-  const transactionText = getAllByText(transactions[0].text);
+  const transactionText = getAllByText(/Hi [+|-]\d/);
   expect(transactionText).toHaveLength(2);
 });
