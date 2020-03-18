@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState';
+import * as FirestoreService from '../services/firebase';
 
 export function AddTransactionComponent() {
   const { addTransaction } = useContext(GlobalContext);
@@ -10,15 +11,14 @@ export function AddTransactionComponent() {
   const onAmountChange = (e) => setAmount(e.target.value);
 
   const onAddClick = () => {
-    const id = Math.floor(Math.random() * 1000000);
-    const transactionAmount = Number(amount);
-    addTransaction({
-      id,
+    FirestoreService.addTransaction({
       text,
-      amount: transactionAmount,
-    });
-    setText('');
-    setAmount(0);
+      amount: Number(amount),
+    }).then(() => {
+      addTransaction();
+      setText('');
+      setAmount(0);
+    }).catch((error) => console.error(error));
   };
 
   return (
