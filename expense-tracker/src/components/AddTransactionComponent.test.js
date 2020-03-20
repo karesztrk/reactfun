@@ -3,6 +3,10 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import {AddTransactionComponent} from './AddTransactionComponent';
 import '@testing-library/jest-dom/extend-expect'
 
+beforeAll(() => {
+  jest.mock('../services/firebase');
+  jest.mock('firebase/app');
+});
 afterEach(cleanup);
 
 test('renders income expense', () => {
