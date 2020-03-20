@@ -21,8 +21,9 @@ export function TransactionListComponent() {
     });
 
     return () => {
-      alert('but first...');
-      unsubscribe();
+      if (unsubscribe) {
+        unsubscribe();
+      }
     }
   }, []);
 

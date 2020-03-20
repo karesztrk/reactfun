@@ -16,8 +16,6 @@ export function AddTransactionComponent() {
       amount: Number(amount),
     }).then(() => {
       addTransaction();
-      setText('');
-      setAmount(0);
     }).catch((error) => console.error(error));
   };
 

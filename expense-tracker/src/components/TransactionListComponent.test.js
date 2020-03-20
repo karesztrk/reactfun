@@ -16,9 +16,13 @@ const transactions = [{
   text,
 }];
 
+jest.mock('../services/firebase');
+jest.mock('firebase/app');
+
 afterEach(cleanup);
 
 test('renders clean list', () => {
+
   const { container, getByText } = render(<TransactionListComponent />);
   const title = getByText('History');
   expect(title).toBeInTheDocument();

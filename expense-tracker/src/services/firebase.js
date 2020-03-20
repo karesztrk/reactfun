@@ -13,10 +13,9 @@ const config = {
 
 // Initialize Firebase
 firebase.initializeApp(config);
-const db = firebase.firestore();
 
-export const addTransaction = (transaction) => db.collection('transactions').add(transaction);
+export const addTransaction = (transaction) => firebase.firestore().collection('transactions').add(transaction);
 
-export const deleteTransaction = (id) => db.collection('transactions').doc(id).delete();
+export const deleteTransaction = (id) => firebase.firestore().collection('transactions').doc(id).delete();
 
-export const getTransactions = (callback) => db.collection('transactions').onSnapshot(callback);
+export const getTransactions = (callback) => firebase.firestore().collection('transactions').onSnapshot(callback);
